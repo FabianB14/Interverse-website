@@ -1,0 +1,1281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interverse (IVX) - Cross-Game Asset Blockchain Platform</title>
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Interverse revolutionizes gaming with blockchain technology, enabling true cross-game asset ownership and portability. Transfer your digital items between games while preserving their value.">
+    <meta name="keywords" content="blockchain gaming, cross-game assets, NFT gaming, digital ownership, IVX token, game development SDK">
+    <meta name="author" content="Fabian Brooks, Joshua Park">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://interverse-ivx.com/">
+    <meta property="og:title" content="Interverse (IVX) - Own Your Gaming Universe">
+    <meta property="og:description" content="Revolutionary blockchain platform enabling true cross-game asset ownership. Built by veterans, for gamers.">
+    <meta property="og:image" content="https://interverse-ivx.com/images/og-image.png">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://interverse-ivx.com/">
+    <meta property="twitter:title" content="Interverse (IVX) - Own Your Gaming Universe">
+    <meta property="twitter:description" content="Revolutionary blockchain platform enabling true cross-game asset ownership. Built by veterans, for gamers.">
+    <meta property="twitter:image" content="https://interverse-ivx.com/images/twitter-image.png">
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://interverse-ivx.com/">
+    <style>
+        :root {
+            --primary: #4527a0;
+            --primary-light: #7e57c2;
+            --primary-dark: #2c1a60;
+            --secondary: #1565c0;
+            --accent: #f39c12;
+            --text-light: #ffffff;
+            --text-dark: #121212;
+            --bg-dark: #121212;
+            --bg-light: #f5f5f5;
+            --bg-gradient: linear-gradient(135deg, var(--primary-dark), var(--primary));
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+        
+        /* Navigation */
+        .navbar {
+            background-color: var(--primary);
+            color: var(--text-light);
+            padding: 1rem 2rem;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .logo-container {
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo-icon {
+            position: relative;
+            width: 40px;
+            height: 40px;
+            margin-right: 10px;
+        }
+        
+        .cube {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transform-style: preserve-3d;
+            animation: rotate 20s infinite linear;
+        }
+        
+        .cube-face {
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            background: var(--secondary);
+            border: 1px solid var(--primary-light);
+            top: 5px;
+            left: 5px;
+        }
+        
+        .cube-face:nth-child(1) {
+            transform: translateZ(15px);
+        }
+        
+        .cube-face:nth-child(2) {
+            transform: rotateY(180deg) translateZ(15px);
+        }
+        
+        .cube-face:nth-child(3) {
+            transform: rotateY(90deg) translateZ(15px);
+        }
+        
+        .cube-face:nth-child(4) {
+            transform: rotateY(-90deg) translateZ(15px);
+        }
+        
+        .cube-face:nth-child(5) {
+            transform: rotateX(90deg) translateZ(15px);
+        }
+        
+        .cube-face:nth-child(6) {
+            transform: rotateX(-90deg) translateZ(15px);
+        }
+        
+        .logo-text {
+            font-size: 24px;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin-left: 1.5rem;
+        }
+        
+        .nav-links a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: var(--accent);
+        }
+        
+        .btn {
+            padding: 0.5rem 1.5rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .btn-primary {
+            background-color: var(--accent);
+            color: var(--text-dark);
+        }
+        
+        .btn-primary:hover {
+            background-color: #e67e22;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background-color: var(--secondary);
+            color: var(--text-light);
+        }
+
+        .btn-secondary:hover {
+            background-color: #1976d2;
+            transform: translateY(-2px);
+        }
+
+        .btn-success {
+            background-color: #2ecc71;
+            color: var(--text-light);
+        }
+
+        .btn-success:hover {
+            background-color: #27ae60;
+            transform: translateY(-2px);
+        }
+        
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--text-light);
+            font-size: 24px;
+            cursor: pointer;
+        }
+        
+        /* Hero Section */
+        .hero {
+            background: var(--bg-gradient);
+            color: var(--text-light);
+            padding: 8rem 2rem 6rem;
+            text-align: center;
+        }
+        
+        .hero-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto 2rem;
+        }
+        
+        .hero-cta {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+        }
+
+        /* Progress Section */
+        .progress-section {
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            padding: 5rem 2rem;
+        }
+
+        .milestone-timeline {
+            position: relative;
+            max-width: 1000px;
+            margin: 3rem auto;
+        }
+
+        .milestone {
+            display: flex;
+            margin-bottom: 3rem;
+            align-items: center;
+        }
+
+        .milestone:nth-child(even) {
+            flex-direction: row-reverse;
+        }
+
+        .milestone-icon {
+            width: 60px;
+            height: 60px;
+            background-color: var(--accent);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            flex-shrink: 0;
+            position: relative;
+            z-index: 2;
+        }
+
+        .milestone-content {
+            flex: 1;
+            padding: 1.5rem;
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            margin: 0 2rem;
+        }
+
+        .milestone-date {
+            font-size: 0.9rem;
+            color: var(--accent);
+            margin-bottom: 0.5rem;
+        }
+
+        .milestone h3 {
+            margin-bottom: 0.5rem;
+            color: var(--primary-light);
+        }
+
+        /* Support Section */
+        .support-section {
+            background-color: white;
+            padding: 5rem 2rem;
+        }
+
+        .support-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .support-card {
+            background-color: var(--bg-light);
+            border-radius: 10px;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s;
+        }
+
+        .support-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .support-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .support-card h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .donation-amounts {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 0.5rem;
+            margin: 1rem 0;
+        }
+
+        .amount-btn {
+            padding: 0.5rem 1rem;
+            border: 2px solid var(--primary);
+            background-color: white;
+            color: var(--primary);
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .amount-btn:hover, .amount-btn.selected {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .custom-amount {
+            width: 100%;
+            padding: 0.5rem;
+            margin: 1rem 0;
+            border: 2px solid var(--primary);
+            border-radius: 5px;
+        }
+
+        /* Investor Section */
+        .investor-section {
+            background-color: var(--primary-dark);
+            color: var(--text-light);
+            padding: 5rem 2rem;
+        }
+
+        .investor-info {
+            max-width: 1000px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .investor-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .stat-box {
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 2rem;
+            border-radius: 10px;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--accent);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            font-size: 1.1rem;
+        }
+
+        .investor-cta {
+            margin-top: 2rem;
+        }
+
+        /* About Section */
+        .section {
+            padding: 5rem 2rem;
+        }
+        
+        .section-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .section-title h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+        
+        .section-title p {
+            font-size: 1.1rem;
+            color: #666;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .feature-card {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .feature-icon {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+        
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+        
+        /* Team Section */
+        .team {
+            background-color: white;
+        }
+        
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .team-member {
+            background-color: var(--bg-light);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .member-img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            background-color: #ddd;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #666;
+            font-size: 1.2rem;
+        }
+        
+        .member-info {
+            padding: 1.5rem;
+        }
+        
+        .member-info h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+        }
+        
+        .member-title {
+            font-size: 1rem;
+            color: #666;
+            margin-bottom: 1rem;
+        }
+        
+        .member-bio {
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+        
+        /* Contact Section */
+        .contact {
+            background-color: var(--primary-dark);
+            color: var(--text-light);
+        }
+        
+        .contact-flex {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+        }
+        
+        .contact-info {
+            flex: 1;
+            min-width: 300px;
+        }
+        
+        .contact-form {
+            flex: 2;
+            min-width: 300px;
+        }
+        
+        .contact-info h3, .contact-form h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .contact-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        
+        .contact-icon {
+            margin-right: 1rem;
+            font-size: 1.5rem;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 5px;
+            background-color: rgba(255, 255, 255, 0.05);
+            color: var(--text-light);
+        }
+        
+        textarea.form-control {
+            resize: vertical;
+            min-height: 150px;
+        }
+        
+        /* Footer */
+        .footer {
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            padding: 3rem 2rem;
+            text-align: center;
+        }
+        
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .social-links {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 2rem;
+            gap: 1.5rem;
+        }
+        
+        .social-link {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.1);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: all 0.3s;
+            text-decoration: none;
+            color: var(--text-light);
+        }
+        
+        .social-link:hover {
+            background-color: var(--primary-light);
+            transform: translateY(-3px);
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .footer-links a {
+            color: var(--text-light);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: var(--accent);
+        }
+        
+        .copyright {
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.6);
+        }
+        
+        /* Animations */
+        @keyframes rotate {
+            0% {
+                transform: rotateX(0) rotateY(0) rotateZ(0);
+            }
+            100% {
+                transform: rotateX(360deg) rotateY(360deg) rotateZ(360deg);
+            }
+        }
+
+        /* VetInTech Banner */
+        .event-banner {
+            background-color: var(--accent);
+            color: var(--text-dark);
+            padding: 0.5rem;
+            text-align: center;
+            font-weight: 600;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background-color: var(--primary);
+                flex-direction: column;
+                padding: 1rem;
+            }
+            
+            .nav-links.active {
+                display: flex;
+            }
+            
+            .nav-links li {
+                margin: 0.5rem 0;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .hero-cta {
+                flex-direction: column;
+            }
+            
+            .milestone {
+                flex-direction: column !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Event Banner -->
+    <div class="event-banner">
+        🎉 Meeting us at VetInTech? Ask about our special veteran founder program!
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo-container">
+                <div class="logo-icon">
+                    <div class="cube">
+                        <div class="cube-face"></div>
+                        <div class="cube-face"></div>
+                        <div class="cube-face"></div>
+                        <div class="cube-face"></div>
+                        <div class="cube-face"></div>
+                        <div class="cube-face"></div>
+                    </div>
+                </div>
+                <div class="logo-text">INTERVERSE</div>
+            </div>
+            
+            <button class="mobile-menu-btn">☰</button>
+            
+            <ul class="nav-links">
+                <li><a href="#about">About</a></li>
+                <li><a href="#progress">Progress</a></li>
+                <li><a href="#roadmap">Roadmap</a></li>
+                <li><a href="#team">Team</a></li>
+                <li><a href="#support">Support</a></li>
+                <li><a href="#investors">Investors</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+    
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-container">
+            <h1>Own Your Gaming Universe</h1>
+            <p>Interverse is revolutionizing the $321 billion gaming industry by enabling true cross-game asset ownership and portability. Transfer your digital items between games while preserving their value and utility.</p>
+            <div class="hero-cta">
+                <a href="#support" class="btn btn-primary">Support Our Mission</a>
+                <a href="#investors" class="btn btn-secondary">Investor Information</a>
+            </div>
+        </div>
+    </section>
+    
+    <!-- About Section -->
+    <section id="about" class="section">
+        <div class="section-container">
+            <div class="section-title">
+                <h2>What We're Building</h2>
+                <p>Interverse creates a universal layer for asset portability, solving the $74 billion trapped digital asset problem.</p>
+            </div>
+            
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🎮</div>
+                    <h3>True Ownership</h3>
+                    <p>Actually own your digital assets on the blockchain. Your items remain yours even if games shut down.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">🔄</div>
+                    <h3>Cross-Game Transfers</h3>
+                    <p>Seamlessly transfer items between different games while our protocol preserves their relative value and utility.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">💰</div>
+                    <h3>Investment Preservation</h3>
+                    <p>Keep the value of your time and money investments when moving to new games rather than starting from scratch.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">🔧</div>
+                    <h3>10-Line Integration</h3>
+                    <p>Game developers can integrate with just 10-15 lines of code using our SDKs for Unity, Unreal Engine, and RPG Maker.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">📈</div>
+                    <h3>Sustainable Revenue</h3>
+                    <p>Developers earn ongoing revenue from transaction fees whenever their assets are traded or used across games.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <h3>Gaming-Optimized Chain</h3>
+                    <p>Custom blockchain with 10,000+ TPS, sub-second confirmations, and minimal fees designed for gaming.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Progress Section -->
+    <section id="progress" class="progress-section">
+        <div class="section-container">
+            <div class="section-title">
+                <h2 style="color: var(--text-light);">Our Progress</h2>
+                <p style="color: rgba(255, 255, 255, 0.8);">From vision to reality - see what we've accomplished and where we're heading.</p>
+            </div>
+
+            <div class="milestone-timeline">
+                <div class="milestone">
+                    <div class="milestone-icon">✓</div>
+                    <div class="milestone-content">
+                        <div class="milestone-date">Q3 2024</div>
+                        <h3>Proof of Concept Complete</h3>
+                        <p>Successfully built and tested our custom blockchain implementation with gaming-specific optimizations.</p>
+                    </div>
+                </div>
+
+                <div class="milestone">
+                    <div class="milestone-icon">✓</div>
+                    <div class="milestone-content">
+                        <div class="milestone-date">Q4 2024</div>
+                        <h3>Sclobo Partnership Established</h3>
+                        <p>Partnered with Sclobo company to integrate Interverse into their RPG Maker game, Sclobania.</p>
+                    </div>
+                </div>
+
+                <div class="milestone">
+                    <div class="milestone-icon">🚧</div>
+                    <div class="milestone-content">
+                        <div class="milestone-date">Q1 2025 - Current</div>
+                        <h3>Multi-Platform SDK Development</h3>
+                        <p>Actively developing SDKs for Unreal Engine, Unity, and RPG Maker. RPG Maker integration live with Sclobania.</p>
+                    </div>
+                </div>
+
+                <div class="milestone">
+                    <div class="milestone-icon">🚧</div>
+                    <div class="milestone-content">
+                        <div class="milestone-date">Q2 2025</div>
+                        <h3>Luminara AR Game Development</h3>
+                        <p>Building our flagship AR plant cultivation game "Luminara" with integrated Interverse features.</p>
+                    </div>
+                </div>
+
+                <div class="milestone">
+                    <div class="milestone-icon">🎯</div>
+                    <div class="milestone-content">
+                        <div class="milestone-date">Q2 2026</div>
+                        <h3>Game Developer Partnerships</h3>
+                        <p>Expanding beyond Sclobo to secure 5-10 additional game developer partnerships.</p>
+                    </div>
+                </div>
+
+                <div class="milestone">
+                    <div class="milestone-icon">🚀</div>
+                    <div class="milestone-content">
+                        <div class="milestone-date">Q4 2026</div>
+                        <h3>Public Beta Launch</h3>
+                        <p>Launch public beta with 20+ integrated games and fully operational marketplace.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Support Section -->
+    <section id="support" class="support-section">
+        <div class="section-container">
+            <div class="section-title">
+                <h2>Support the Revolution</h2>
+                <p>Help us build the future of digital asset ownership in gaming.</p>
+            </div>
+
+            <div class="support-options">
+                <div class="support-card">
+                    <div class="support-icon">💝</div>
+                    <h3>Make a Donation</h3>
+                    <p>Every contribution helps us continue development and bring true asset ownership to gamers worldwide.</p>
+                    
+                    <div class="donation-amounts">
+                        <button class="amount-btn" data-amount="25">$25</button>
+                        <button class="amount-btn" data-amount="50">$50</button>
+                        <button class="amount-btn" data-amount="100">$100</button>
+                        <button class="amount-btn" data-amount="250">$250</button>
+                        <button class="amount-btn" data-amount="500">$500</button>
+                    </div>
+                    
+                    <input type="number" class="custom-amount" placeholder="Enter custom amount" id="customAmount">
+                    
+                    <button class="btn btn-primary" onclick="processDonation()">Donate Now</button>
+                    
+                    <p style="margin-top: 1rem; font-size: 0.9rem;">Tax-deductible donations available for qualifying contributors.</p>
+                </div>
+
+                <div class="support-card">
+                    <div class="support-icon">🪙</div>
+                    <h3>Buy IVX Tokens</h3>
+                    <p>Get early access to IVX tokens and be part of the Interverse ecosystem from the beginning.</p>
+                    
+                    <div style="margin: 2rem 0;">
+                        <p><strong>Token Sale Opening:</strong></p>
+                        <p style="font-size: 1.2rem; color: var(--primary);">Q2 2025</p>
+                    </div>
+                    
+                    <button class="btn btn-secondary" onclick="joinWaitlist()">Join Waitlist</button>
+                    
+                    <p style="margin-top: 1rem; font-size: 0.9rem;">Be first to know when token sales begin.</p>
+                </div>
+
+                <div class="support-card">
+                    <div class="support-icon">🎮</div>
+                    <h3>Developer Partnership</h3>
+                    <p>Are you a game developer? Join our early adopter program and get special benefits.</p>
+                    
+                    <ul style="text-align: left; margin: 1.5rem 0;">
+                        <li>Free SDK integration support</li>
+                        <li>Revenue sharing opportunities</li>
+                        <li>Marketing co-promotion</li>
+                        <li>Early access to features</li>
+                    </ul>
+                    
+                    <a href="#contact" class="btn btn-success">Become a Partner</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Investor Section -->
+    <section id="investors" class="investor-section">
+        <div class="investor-info">
+            <div class="section-title">
+                <h2 style="color: var(--text-light);">Investor Information</h2>
+                <p style="color: rgba(255, 255, 255, 0.8);">Join us in revolutionizing the gaming industry.</p>
+            </div>
+
+            <div class="investor-stats">
+                <div class="stat-box">
+                    <div class="stat-number">$321B</div>
+                    <div class="stat-label">Gaming Market Size</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-number">$74B</div>
+                    <div class="stat-label">In-Game Asset Market</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-number">3.2B</div>
+                    <div class="stat-label">Global Gamers</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-number">73.7%</div>
+                    <div class="stat-label">Blockchain Gaming CAGR</div>
+                </div>
+            </div>
+
+            <div style="background-color: rgba(255, 255, 255, 0.1); padding: 2rem; border-radius: 10px; margin: 2rem 0;">
+                <h3 style="margin-bottom: 1rem;">Seeking Seed Investment</h3>
+                <p style="font-size: 1.2rem; margin-bottom: 1rem;">We're raising $1.5M to accelerate development and bring Interverse to market.</p>
+                <div style="text-align: left; max-width: 600px; margin: 0 auto 1.5rem;">
+                    <p style="margin-bottom: 0.5rem;"><strong>Use of Funds:</strong></p>
+                    <ul style="list-style-type: disc; padding-left: 2rem;">
+                        <li>Complete production-ready blockchain infrastructure</li>
+                        <li>Finalize SDKs for Unity, Unreal Engine, and RPG Maker</li>
+                        <li>Launch Luminara AR game with Interverse integration</li>
+                        <li>Expand beyond Sclobo to 10+ game partners</li>
+                        <li>Build out engineering and business development teams</li>
+                    </ul>
+                </div>
+                <p style="font-size: 1.1rem;"><strong>Projected 5-year revenue:</strong> $85M with 205% CAGR</p>
+            </div>
+
+            <div style="background-color: rgba(255, 255, 255, 0.1); padding: 2rem; border-radius: 10px; margin: 2rem 0;">
+                <h3 style="margin-bottom: 1rem;">Early Investor Benefits</h3>
+                <div style="text-align: left; max-width: 600px; margin: 0 auto;">
+                    <p style="margin-bottom: 1rem;"><strong>Token Vesting Schedule:</strong></p>
+                    <ul style="list-style-type: disc; padding-left: 2rem; margin-bottom: 1.5rem;">
+                        <li>Seed investors: 25% at TGE, 75% over 18 months</li>
+                        <li>Early backers get preferential allocation</li>
+                        <li>Anti-dilution protection for first round</li>
+                    </ul>
+                    
+                    <p style="margin-bottom: 1rem;"><strong>Additional Benefits:</strong></p>
+                    <ul style="list-style-type: disc; padding-left: 2rem;">
+                        <li>Board observer rights</li>
+                        <li>Early access to platform features</li>
+                        <li>Direct input on strategic partnerships</li>
+                        <li>Preferential terms in future rounds</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="investor-cta">
+                <button class="btn btn-primary" onclick="requestPitchDeck()">Request Pitch Deck</button>
+                <a href="#contact" class="btn btn-secondary" style="margin-left: 1rem;">Schedule Meeting</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Roadmap Section -->
+    <section id="roadmap" class="section">
+        <div class="section-container">
+            <div class="section-title">
+                <h2>2025-2027 Roadmap</h2>
+                <p>Our path to transforming digital asset ownership in gaming.</p>
+            </div>
+
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">📅</div>
+                    <h3>Q1-Q2 2025</h3>
+                    <ul style="text-align: left;">
+                        <li>Complete Sclobania integration</li>
+                        <li>Launch Discord early access program</li>
+                        <li>Finalize RPG Maker SDK</li>
+                        <li>Luminara AR game alpha</li>
+                    </ul>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">📅</div>
+                    <h3>Q3-Q4 2025</h3>
+                    <ul style="text-align: left;">
+                        <li>Unity SDK beta release</li>
+                        <li>Unreal Engine SDK beta</li>
+                        <li>Luminara closed beta launch</li>
+                        <li>5 game partnerships secured</li>
+                    </ul>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">📅</div>
+                    <h3>Q1-Q2 2026</h3>
+                    <ul style="text-align: left;">
+                        <li>Complete SDK suite launch</li>
+                        <li>Luminara public launch</li>
+                        <li>Developer documentation portal</li>
+                        <li>10+ game integrations</li>
+                    </ul>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">📅</div>
+                    <h3>Q3-Q4 2026</h3>
+                    <ul style="text-align: left;">
+                        <li>Private beta with partners</li>
+                        <li>IVX token pre-sale</li>
+                        <li>Marketplace MVP launch</li>
+                        <li>Security audits complete</li>
+                    </ul>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">📅</div>
+                    <h3>Q1 2027</h3>
+                    <ul style="text-align: left;">
+                        <li>Public beta launch</li>
+                        <li>20+ integrated games</li>
+                        <li>IVX token public sale</li>
+                        <li>Mobile SDK development</li>
+                    </ul>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">📅</div>
+                    <h3>Q2+ 2027</h3>
+                    <ul style="text-align: left;">
+                        <li>Full platform launch</li>
+                        <li>50+ integrated games</li>
+                        <li>International expansion</li>
+                        <li>Major partnership announcements</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Team Section -->
+    <section id="team" class="section team">
+        <div class="section-container">
+            <div class="section-title">
+                <h2>Veteran-Led Innovation</h2>
+                <p>Meet the founders bringing military precision to blockchain gaming.</p>
+            </div>
+            
+            <div class="team-grid">
+                <div class="team-member">
+                    <img src="https://i.ibb.co/21sCp5vP/WIN-20240815-18-07-18-Pro.jpg" alt="Fabian Brooks" class="member-img">
+                    <div class="member-info">
+                        <h3>Fabian Brooks</h3>
+                        <div class="member-title">Founder & CEO</div>
+                        <p class="member-bio">U.S. Army veteran (2004-2018) with deployments to Iraq and tours in Korea and Japan. Former Software Engineer at Amazon Alexa (2019-2023). Currently studying Game Design and Production at AIE. Originally from New Orleans, bringing a unique blend of military leadership, big tech experience, and gaming expertise to revolutionize digital asset ownership.</p>
+                    </div>
+                </div>
+                
+                <div class="team-member">
+                    <div class="member-img">Joshua Park Image</div>
+                    <div class="member-info">
+                        <h3>Joshua Park</h3>
+                        <div class="member-title">Co-Founder & CTO</div>
+                        <p class="member-bio">Full-stack developer with expertise in Python, Java, JavaScript, and C#. Experience spans Django, Flask, Express.js, Angular, and Spring frameworks. University of Washington background in data analysis and research. Previously at Smart Group Software, bringing deep technical knowledge in blockchain implementation and database architecture.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Contact Section -->
+    <section id="contact" class="section contact">
+        <div class="section-container">
+            <div class="section-title">
+                <h2>Get In Touch</h2>
+                <p>Ready to join the revolution? Let's talk.</p>
+            </div>
+            
+            <div class="contact-flex">
+                <div class="contact-info">
+                    <h3>Contact Information</h3>
+                    
+                    <div class="contact-item">
+                        <div class="contact-icon">📧</div>
+                        <div>
+                            <div>fabian.brooks@interverse-ivx.com</div>
+                            <div>josh.park@interverse-ivx.com</div>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <div class="contact-icon">📱</div>
+                        <div>253-263-9718</div>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <div class="contact-icon">📍</div>
+                        <div>Greater Seattle Area</div>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <div class="contact-icon">🎖️</div>
+                        <div>Proud VetInTech Member</div>
+                    </div>
+                </div>
+                
+                <div class="contact-form">
+                    <h3>Send Us a Message</h3>
+                    
+                    <form id="contactForm" action="https://formspree.io/f/xwpqqoze" method="POST">
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" id="name" name="name" class="form-control" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" class="form-control" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="subject">Subject</label>
+                            <select id="subject" name="subject" class="form-control" required>
+                                <option value="">Select a topic</option>
+                                <option value="investor">Investor Inquiry</option>
+                                <option value="developer">Developer Partnership</option>
+                                <option value="donation">Donation Information</option>
+                                <option value="general">General Question</option>
+                                <option value="vetintech">VetInTech Connection</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="message">Message</label>
+                            <textarea id="message" name="message" class="form-control" required></textarea>
+                        </div>
+                        
+                        <input type="hidden" name="_cc" value="josh.park@interverse-ivx.com">
+                        <input type="hidden" name="_subject" value="New Interverse Website Contact">
+                        
+                        <button type="submit" class="btn btn-primary">Send Message</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="social-links">
+                <a href="https://twitter.com/interverseivx" class="social-link" target="_blank">
+                    <span>𝕏</span>
+                </a>
+                <a href="https://linkedin.com/company/interverse-ivx" class="social-link" target="_blank">
+                    <span>in</span>
+                </a>
+                <a href="https://discord.gg/interverse" class="social-link" target="_blank">
+                    <span>D</span>
+                </a>
+                <a href="https://github.com/FabianB14" class="social-link" target="_blank">
+                    <span>GH</span>
+                </a>
+            </div>
+            
+            <div class="footer-links">
+                <a href="#roadmap">Roadmap</a>
+                <a href="#support">Support Us</a>
+                <a href="#investors">For Investors</a>
+                <a href="https://docs.interverse-ivx.com" target="_blank">Documentation</a>
+                <a href="#team">About Us</a>
+            </div>
+            
+            <div class="copyright">
+                &copy; 2025 Interverse (IVX). All rights reserved. | Building the future of gaming.
+            </div>
+        </div>
+    </footer>
+    
+    <script>
+        // Mobile Menu Toggle
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const navLinks = document.querySelector('.nav-links');
+        
+        mobileMenuBtn.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+
+        // Donation Amount Selection
+        document.querySelectorAll('.amount-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.amount-btn').forEach(b => b.classList.remove('selected'));
+                this.classList.add('selected');
+                document.getElementById('customAmount').value = this.dataset.amount;
+            });
+        });
+
+        // Process Donation (integrate with payment processor)
+        function processDonation() {
+            const amount = document.getElementById('customAmount').value;
+            if (!amount || amount <= 0) {
+                alert('Please select or enter a donation amount.');
+                return;
+            }
+            
+            // Here you would integrate with Stripe, PayPal, or crypto payment processor
+            // For now, we'll redirect to a payment page
+            alert(`Thank you for your interest in donating $${amount}! Payment processing integration coming soon.`);
+            
+            // Example Stripe integration:
+            // stripe.redirectToCheckout({
+            //     lineItems: [{price: 'price_ID', quantity: 1}],
+            //     mode: 'payment',
+            //     successUrl: window.location.origin + '/success',
+            //     cancelUrl: window.location.origin + '/cancel',
+            // });
+        }
+
+        // Join Token Waitlist
+        function joinWaitlist() {
+            const email = prompt('Enter your email to join the IVX token waitlist:');
+            if (email && email.includes('@')) {
+                // Here you would send this to your backend
+                alert('Thank you! You\'ve been added to the waitlist.');
+            }
+        }
+
+        // Request Pitch Deck
+        function requestPitchDeck() {
+            // Redirect to contact form with pre-filled subject
+            document.getElementById('subject').value = 'investor';
+            document.getElementById('message').value = 'I would like to request the Interverse pitch deck and learn more about investment opportunities.';
+            document.getElementById('contact').scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Form submission tracking
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            // This will work with Formspree automatically
+            // You can add additional tracking here if needed
+            console.log('Form submitted');
+        });
+    </script>
+</body>
+</html>
