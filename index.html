@@ -564,6 +564,21 @@
             color: var(--text-light);
         }
         
+        /* Fix for select dropdown options */
+        select.form-control {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        
+        select.form-control option {
+            background-color: var(--primary-dark);
+            color: var(--text-light);
+            padding: 0.5rem;
+        }
+        
+        select.form-control option:hover {
+            background-color: var(--primary);
+        }
+        
         textarea.form-control {
             resize: vertical;
             min-height: 150px;
@@ -1218,7 +1233,7 @@
             });
         });
 
-        // Process Donation (integrate with payment processor)
+        // Process Donation
         function processDonation() {
             const amount = document.getElementById('customAmount').value;
             if (!amount || amount <= 0) {
@@ -1226,17 +1241,183 @@
                 return;
             }
             
-            // Here I will integrate with Stripe, PayPal, or crypto payment processor
-            // I'll redirect to a payment page
-            alert(`Thank you for your interest in donating $${amount}! Payment processing integration coming soon.`);
+            // Show donation options modal
+            showDonationOptions(amount);
+        }
+
+        // Show donation options modal
+        function showDonationOptions(amount) {
+            const modal = document.createElement('div');
+            modal.style.cssText = `
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0,0,0,0.8);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                z-index: 1000;
+            `;
             
-            // Example Stripe integration:
-            // stripe.redirectToCheckout({
-            //     lineItems: [{price: 'price_ID', quantity: 1}],
-            //     mode: 'payment',
-            //     successUrl: window.location.origin + '/success',
-            //     cancelUrl: window.location.origin + '/cancel',
-            // });
+            const modalContent = document.createElement('div');
+            modalContent.style.cssText = `
+                background: white;
+                padding: 2rem;
+                border-radius: 10px;
+                max-width: 500px;
+                width: 90%;
+                text-align: center;
+            `;
+            
+            modalContent.innerHTML = `
+                <h2 style="color: var(--primary); margin-bottom: 1rem;">Choose Donation Method</h2>
+                <p style="margin-bottom: 1.5rem;">Amount: <strong>${amount}</strong></p>
+                
+                <div style="display: grid; gap: 1rem;">
+                    <!-- PayPal Option -->
+                    <button onclick="donatePayPal('${amount}')" class="btn btn-primary" style="width: 100%;">
+                        💳 Donate via PayPal
+                    </button>
+                    
+                    <!-- Cash App Option -->
+                    <button onclick="donateCashApp('${amount}')" class="btn btn-secondary" style="width: 100%;">
+                        💵 Donate via Cash App
+                    </button>
+                    
+                    <!-- Crypto Option -->
+                    <button onclick="showCryptoOptions('${amount}')" class="btn btn-success" style="width: 100%;">
+                        🪙 Donate with Crypto
+                    </button>
+                    
+                    <!-- Buy Me a Coffee Option -->
+                    <button onclick="donateBuyMeACoffee()" class="btn btn-primary" style="width: 100%;">
+                        ☕ Buy Me a Coffee
+                    </button>
+                </div>
+                
+                <button onclick="this.parentElement.parentElement.remove()" style="margin-top: 1rem; background: none; border: none; color: #666; cursor: pointer;">
+                    Cancel
+                </button>
+            `;
+            
+            modal.appendChild(modalContent);
+            document.body.appendChild(modal);
+            
+            modal.addEventListener('click', function(e) {
+                if (e.target === modal) {
+                    modal.remove();
+                }
+            });
+        }
+
+        // PayPal Donation
+        function donatePayPal(amount) {
+            // Replace YOUR_PAYPAL_EMAIL with your actual PayPal email
+            const paypalEmail = 'fabian.brooks@outlook.com';
+            const paypalUrl = `https://www.paypal.com/donate?business=${paypalEmail}&amount=${amount}&currency_code=USD&item_name=Interverse+Development+Support`;
+            window.open(paypalUrl, '_blank');
+        }
+
+        // Cash App Donation
+        function donateCashApp(amount) {
+            // Replace $YourCashTag with your actual Cash App tag
+            const cashTag = '$FabianBrooks'; // Update this with your actual Cash App tag
+            const cashAppUrl = `https://cash.app/${cashTag}/${amount}`;
+            window.open(cashAppUrl, '_blank');
+        }
+
+        // Crypto Donation Options
+        function showCryptoOptions(amount) {
+            document.body.querySelector('div[style*="position: fixed"]').remove();
+            
+            const cryptoModal = document.createElement('div');
+            cryptoModal.style.cssText = `
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0,0,0,0.8);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                z-index: 1000;
+            `;
+            
+            const cryptoContent = document.createElement('div');
+            cryptoContent.style.cssText = `
+                background: white;
+                padding: 2rem;
+                border-radius: 10px;
+                max-width: 600px;
+                width: 90%;
+                text-align: center;
+                max-height: 80vh;
+                overflow-y: auto;
+            `;
+            
+            // Replace these with your actual crypto addresses
+            cryptoContent.innerHTML = `
+                <h2 style="color: var(--primary); margin-bottom: 1rem;">Crypto Donation</h2>
+                <p style="margin-bottom: 1.5rem;">Send <strong>${amount}</strong> equivalent to any address below:</p>
+                
+                <div style="text-align: left;">
+                    <!-- Bitcoin -->
+                    <div style="margin-bottom: 1.5rem; padding: 1rem; background: #f5f5f5; border-radius: 5px;">
+                        <strong>Bitcoin (BTC):</strong><br>
+                        <code style="word-break: break-all; font-size: 0.9rem;">YOUR_BTC_ADDRESS</code>
+                        <button onclick="copyToClipboard('YOUR_BTC_ADDRESS')" style="margin-left: 0.5rem; padding: 0.25rem 0.5rem; background: var(--primary); color: white; border: none; border-radius: 3px; cursor: pointer;">Copy</button>
+                    </div>
+                    
+                    <!-- Ethereum -->
+                    <div style="margin-bottom: 1.5rem; padding: 1rem; background: #f5f5f5; border-radius: 5px;">
+                        <strong>Ethereum (ETH):</strong><br>
+                        <code style="word-break: break-all; font-size: 0.9rem;">YOUR_ETH_ADDRESS</code>
+                        <button onclick="copyToClipboard('YOUR_ETH_ADDRESS')" style="margin-left: 0.5rem; padding: 0.25rem 0.5rem; background: var(--primary); color: white; border: none; border-radius: 3px; cursor: pointer;">Copy</button>
+                    </div>
+                    
+                    <!-- USDT -->
+                    <div style="margin-bottom: 1.5rem; padding: 1rem; background: #f5f5f5; border-radius: 5px;">
+                        <strong>USDT (TRC20):</strong><br>
+                        <code style="word-break: break-all; font-size: 0.9rem;">YOUR_USDT_ADDRESS</code>
+                        <button onclick="copyToClipboard('YOUR_USDT_ADDRESS')" style="margin-left: 0.5rem; padding: 0.25rem 0.5rem; background: var(--primary); color: white; border: none; border-radius: 3px; cursor: pointer;">Copy</button>
+                    </div>
+                </div>
+                
+                <p style="margin-top: 1rem; font-size: 0.9rem; color: #666;">
+                    Please include "Interverse Donation" in the transaction note if possible.
+                </p>
+                
+                <button onclick="this.parentElement.parentElement.remove()" style="margin-top: 1rem; background: none; border: none; color: #666; cursor: pointer;">
+                    Close
+                </button>
+            `;
+            
+            cryptoModal.appendChild(cryptoContent);
+            document.body.appendChild(cryptoModal);
+            
+            cryptoModal.addEventListener('click', function(e) {
+                if (e.target === cryptoModal) {
+                    cryptoModal.remove();
+                }
+            });
+        }
+
+        // Buy Me a Coffee
+        function donateBuyMeACoffee() {
+            // Replace 'yourpage' with your actual Buy Me a Coffee username
+            window.open('https://www.buymeacoffee.com/interverse', '_blank');
+        }
+
+        // Copy to clipboard function
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text).then(function() {
+                alert('Address copied to clipboard!');
+            }, function(err) {
+                console.error('Could not copy text: ', err);
+            });
         }
 
         // Join Token Waitlist
